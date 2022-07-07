@@ -1,16 +1,16 @@
-import { Orders, OrderDTO } from '../models/order';
+import { Orders, OrderDTO, UpdatedOrderDTO } from '../models/order';
 import db from '../database';
 
-export const getAllDataOrders = async (): Promise<Orders[] | any> => {
+export const getAllDataOrders = async () => {
   try {
-    const orders: Orders[] = await db.findAll({ table: 'orders' });
+    const orders: Orders[] = (await db.findAll({ table: 'orders' })) ?? [];
     return orders;
   } catch (error) {
     console.error(error);
   }
 };
 
-export const getDataOneOrder = async (idOrder: number): Promise<Orders | any> => {
+export const getDataOneOrder = async (idOrder: number) => {
   try {
     const order: Orders =
       (
@@ -31,20 +31,18 @@ export const addOrderData = async (orden: OrderDTO) => {
     const resultSave = await db.save({ table: 'orders', data: orden });
     // console.log(resultSave.insertId);
     const { insertId } = resultSave;
-    const newOrderCreated: OrderDTO = await getDataOneOrder(insertId);
+    const newOrderCreated: Orders | undefined = await getDataOneOrder(insertId);
     return newOrderCreated;
   } catch (error) {
     console.error(error);
   }
 };
 
-export const updateOrderData = async (idOrden: number, orderToUpdate: OrderDTO) => {
+export const updateOrderData = async (idOrden: number, orderToUpdate: UpdatedOrderDTO) => {
   try {
     let orderFinded: Orders = await getDataOneOrder(idOrden);
-    console.log('order finded', orderFinded);
     orderFinded = { ...orderFinded, ...orderToUpdate };
     const resultUpdate = await db.update({ table: 'orders', data: orderFinded, id: 'idOrder' });
-    console.log(resultUpdate);
     return orderFinded;
   } catch (error) {
     console.error(error);
