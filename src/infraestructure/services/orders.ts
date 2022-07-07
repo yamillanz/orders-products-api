@@ -10,14 +10,14 @@ export const getAllDataOrders = async (): Promise<Orders[] | any> => {
   }
 };
 
-export const getDataOneOrder = async (idUSer: number): Promise<Orders | any> => {
+export const getDataOneOrder = async (idOrder: number): Promise<Orders | any> => {
   try {
     const order: Orders =
       (
         await db.findOne({
           table: 'orders',
           id: 'idOrder',
-          idvalue: idUSer,
+          idvalue: idOrder,
         })
       )[0] ?? null;
     return order;
