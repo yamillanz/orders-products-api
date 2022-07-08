@@ -48,8 +48,9 @@ class database {
 
   public desconectarDB() {
     this.cnn.end(() => {
-      //console.log("error:");
+      console.log('desconectado!');
     });
+    this.cnn = null;
   }
 
   async querySelect(sql: string, data?: any) {
@@ -81,10 +82,10 @@ class database {
       return { error: 'Incomplete Parameters!!!' };
     }
     try {
-      const result = await this.cnn.query(
-        `UPDATE ${table} SET ? WHERE ${id} = ? `,
-        [data, data[id || '']]
-      );
+      const result = await this.cnn.query(`UPDATE ${table} SET ? WHERE ${id} = ? `, [
+        data,
+        data[id || ''],
+      ]);
       return result[0];
     } catch (error) {
       return error;
@@ -97,10 +98,7 @@ class database {
       return { error: 'Incomplete Parameters!!!' };
     }
     try {
-      const result = await this.cnn.query(
-        `DELETE FROM ${table} WHERE ${id} = ? `,
-        data[id || '']
-      );
+      const result = await this.cnn.query(`DELETE FROM ${table} WHERE ${id} = ? `, data[id || '']);
       return result;
     } catch (error) {
       return error;
@@ -124,10 +122,7 @@ class database {
       return { error: 'Incomplete Parameters!!!' };
     }
     try {
-      const result = await this.cnn.query(
-        `SELECT * FROM ${table} WHERE ${id} = ? `,
-        idvalue
-      );
+      const result = await this.cnn.query(`SELECT * FROM ${table} WHERE ${id} = ? `, idvalue);
       return result[0];
     } catch (error) {
       return error;

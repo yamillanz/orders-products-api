@@ -24,14 +24,34 @@ app.use(productsRoutes);
 app.use(ordersRoutes);
 // ************
 
-// db.conectarBD();
-// db.conectMysql2();
-// db.conectO();
 db.conectDB();
-app.listen(app.get('port'), () => {
+const server = app.listen(app.get('port'), () => {
   console.log('Server express on port:', app.get('port'));
 });
 
 app.get('/', (req, resp) => {
   resp.send('Server http ON last!!!');
 });
+
+var shutting_down = false;
+
+app.use(function (req, resp, next) {
+  if (!shutting_down) return next();
+  resp.setHeader('Connection', 'close');
+  resp.send(503);
+});
+
+function cleanup() {
+  shutting_down = true;
+  server.close(function () {
+    console.log('Closed out remaining connections.');
+    db.desconectarDB();
+    process.exit();
+  });
+}
+
+process.on('SIGINT', cleanup);
+process.on('SIGTERM', cleanup);
+
+export default server;
+export { db };
