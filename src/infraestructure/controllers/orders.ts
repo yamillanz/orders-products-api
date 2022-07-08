@@ -1,11 +1,6 @@
-import { OrderDTO, Orders } from './../models/order';
 import { Request, Response } from 'express';
-import {
-  deleteOrderData,
-  getAllDataOrders,
-  getDataOneOrder,
-  updateOrderData,
-} from '../services/orders';
+import { Orders } from './../models/order';
+import { deleteOrderData, getAllDataOrders, getDataOneOrder } from '../services/orders';
 import { addNewOrder } from '../../domain/newOrder';
 import { updateAnOrder } from '../../domain/updateAnOrder';
 
@@ -34,7 +29,7 @@ export const addOrder = async (req: Request, resp: Response) => {
 export const updateOrder = async (req: Request, resp: Response) => {
   try {
     const idOrder = +req.params.idOrder;
-    const orderUpdated = await updateAnOrder(idOrder, req.body);
+    const orderUpdated: Orders = await updateAnOrder(idOrder, req.body);
     resp.status(200).json({ message: 'Successfully Update Data', order: orderUpdated });
   } catch (error) {
     const { statusCode, errorsMessages } = error;

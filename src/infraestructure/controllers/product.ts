@@ -1,11 +1,7 @@
 import { Request, Response } from 'express';
-import {
-  addProductData,
-  deleteProductData,
-  getAllDataProducts,
-  getDataOneProduct,
-  updateProductData,
-} from '../services/products';
+import { addNewProduct } from '../../domain/newProduct';
+import { updateAProduct } from '../../domain/updateAProduct';
+import { deleteProductData, getAllDataProducts, getDataOneProduct } from '../services/products';
 
 export const getAllProducts = async (req: Request, resp: Response) => {
   const products = await getAllDataProducts();
@@ -18,20 +14,31 @@ export const getAProduct = async (req: Request, resp: Response) => {
   resp.status(200).json(product);
 };
 
+export const addProduct = async (req: Request, resp: Response) => {
+  try {
+    const newProduct = await addNewProduct(req.body);
+    resp.status(200).json({ message: 'Add Data Successfully', order: newProduct });
+  } catch (error) {
+    const { statusCode, errorsMessages } = error;
+    console.log('error request: ', error);
+    resp.status(statusCode).json({ errorsMessages });
+  }
+};
+
 export const updateProduct = async (req: Request, resp: Response) => {
-  const idProduct = +req.params.idProduct;
-  const orderUpdated = await updateProductData(idProduct, req.body);
-  resp.status(200).json({ message: 'Successfully Update Data', order: orderUpdated });
+  try {
+    const idProduct = +req.params.idProduct;
+    const productUpdate = await updateAProduct(idProduct, req.body);
+    resp.status(200).json({ message: 'Successfully Update Data', order: productUpdate });
+  } catch (error) {
+    const { statusCode, errorsMessages } = error;
+    console.log('error request: ', error);
+    resp.status(statusCode).json({ errorsMessages });
+  }
 };
 
 export const deleteAProduct = async (req: Request, resp: Response) => {
   const idProduct = +req.params.idProduct;
   await deleteProductData(idProduct);
   resp.json({ message: 'Deleted Successfully' });
-};
-
-export const addProduct = async (req: Request, resp: Response) => {
-  const productData = req.body;
-  const newProduct = await addProductData(productData);
-  resp.status(200).json({ message: 'Successfully Add Data', order: newProduct });
 };

@@ -1,4 +1,6 @@
-import { Products, ProductDTO } from '../models/products';
+import { Products } from '../models/products';
+import { ProductDTO, UpdatedProuductDTO } from './../models/products.dto';
+
 import db from '../database';
 
 export const getAllDataProducts = async (): Promise<Products[] | any> => {
@@ -31,18 +33,18 @@ export const addProductData = async (product: ProductDTO) => {
     const resultSave = await db.save({ table: 'orders_products', data: product });
     // console.log(resultSave.insertId);
     const { insertId } = resultSave;
-    const newProductCreated: ProductDTO = await getDataOneProduct(insertId);
+    const newProductCreated: Products = await getDataOneProduct(insertId);
     return newProductCreated;
   } catch (error) {
     console.error(error);
   }
 };
 
-export const updateProductData = async (idProduct: number, ProductToUpdate: ProductDTO) => {
+export const updateProductData = async (idProduct: number, ProductToUpdate: UpdatedProuductDTO) => {
   try {
     let ProductFinded: Products = await getDataOneProduct(idProduct);
     ProductFinded = { ...ProductFinded, ...ProductToUpdate };
-    const resultUpdate = await db.update({
+    await db.update({
       table: 'orders_products',
       data: ProductFinded,
       id: 'idOrderProduct',

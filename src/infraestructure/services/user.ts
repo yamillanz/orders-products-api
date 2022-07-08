@@ -19,7 +19,7 @@ export const getDataOneUser = async (idUSer: number): Promise<Users | undefined>
         idvalue: idUSer,
       })
     )[0];
-    return user;
+    return user ?? null;
   } catch (error) {
     console.error(error);
   }

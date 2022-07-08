@@ -1,4 +1,5 @@
-import { Orders, OrderDTO, UpdatedOrderDTO } from '../models/order';
+import { Orders } from '../models/order';
+import { OrderDTO, UpdatedOrderDTO } from '../models/order.dto';
 import db from '../database';
 
 export const getAllDataOrders = async () => {

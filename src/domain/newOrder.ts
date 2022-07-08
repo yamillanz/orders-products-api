@@ -1,8 +1,10 @@
-import { OrderDTO, Orders } from './../infraestructure/models/order';
+import { Orders } from './../infraestructure/models/order';
+import { OrderDTO } from './../infraestructure/models/order.dto';
 import { plainToClass } from 'class-transformer';
 import { errorEntryBuilder } from './../application/errorEntryBuilder';
 import { validateOrReject } from 'class-validator';
 import { addOrderData } from '../infraestructure/services/orders';
+import { getDataOneUser } from '../infraestructure/services/user';
 
 export const addNewOrder = async (orderData: OrderDTO): Promise<Orders> => {
   const orderDTO = plainToClass(OrderDTO, orderData);
@@ -16,6 +18,12 @@ export const addNewOrder = async (orderData: OrderDTO): Promise<Orders> => {
   } catch (error) {
     console.log('paso', error);
     throw errorEntryBuilder(error);
+  }
+
+  const { idUser } = orderData;
+  const validUser = await getDataOneUser(idUser);
+  if (!validUser || JSON.stringify(validUser) === '{}') {
+    throw { statusCode: 400, errorsMessages: 'No valid user' };
   }
 
   try {

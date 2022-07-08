@@ -12,5 +12,3 @@ export interface Products {
   mark: string;
   status: boolean;
 }
-
-export interface ProductDTO extends Partial<Products> {}
