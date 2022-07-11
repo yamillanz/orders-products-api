@@ -48,4 +48,4 @@ export class ProductDTO {
   @IsNotEmpty()
   status: boolean;
 }
-export class UpdatedProuductDTO extends PartialType(ProductDTO) {}
+export class UpdatedProductDTO extends PartialType(ProductDTO) {}

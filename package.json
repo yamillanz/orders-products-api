@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "nodemon",
     "start": "tsc -p . && ts-node dist/index.js",
-    "build": "tsc -p .",
+    "build": "tsc",
     "test": "jest"
   },
   "author": "Yamil Lanz",
@@ -18,6 +18,7 @@
     "@types/morgan": "^1.9.3",
     "@types/mysql": "^2.15.21",
     "@types/node": "^17.0.41",
+    "@types/supertest": "^2.0.12",
     "jest": "^28.1.0",
     "nodemon": "^2.0.16",
     "supertest": "^6.2.4",
@@ -27,7 +28,6 @@
   },
   "dependencies": {
     "@nestjs/mapped-types": "^1.0.1",
-    "@types/supertest": "^2.0.12",
     "class-transformer": "^0.5.1",
     "class-validator": "^0.13.2",
     "cors": "^2.8.5",

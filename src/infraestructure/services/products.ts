@@ -1,5 +1,5 @@
 import { Products } from '../models/products';
-import { ProductDTO, UpdatedProuductDTO } from './../models/products.dto';
+import { ProductDTO, UpdatedProductDTO } from './../models/products.dto';
 
 import db from '../database';
 
@@ -31,7 +31,6 @@ export const getDataOneProduct = async (idProduct: number): Promise<Products | a
 export const addProductData = async (product: ProductDTO) => {
   try {
     const resultSave = await db.save({ table: 'orders_products', data: product });
-    // console.log(resultSave.insertId);
     const { insertId } = resultSave;
     const newProductCreated: Products = await getDataOneProduct(insertId);
     return newProductCreated;
@@ -40,7 +39,7 @@ export const addProductData = async (product: ProductDTO) => {
   }
 };
 
-export const updateProductData = async (idProduct: number, ProductToUpdate: UpdatedProuductDTO) => {
+export const updateProductData = async (idProduct: number, ProductToUpdate: UpdatedProductDTO) => {
   try {
     let ProductFinded: Products = await getDataOneProduct(idProduct);
     ProductFinded = { ...ProductFinded, ...ProductToUpdate };

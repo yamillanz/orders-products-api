@@ -2,7 +2,7 @@ import { getDataOneProduct } from './../infraestructure/services/products';
 import { validateOrReject } from 'class-validator';
 import { plainToClass } from 'class-transformer';
 import { Products } from '../infraestructure/models/products';
-import { UpdatedProuductDTO } from '../infraestructure/models/products.dto';
+import { UpdatedProductDTO } from '../infraestructure/models/products.dto';
 
 import { errorEntryBuilder } from '../application/errorEntryBuilder';
 import { updateProductData } from '../infraestructure/services/products';
@@ -10,9 +10,9 @@ import { getDataOneOrder } from '../infraestructure/services/orders';
 
 export const updateAProduct = async (
   idProduct: number,
-  productData: UpdatedProuductDTO
+  productData: UpdatedProductDTO
 ): Promise<Products> => {
-  const productDTO = plainToClass(UpdatedProuductDTO, productData);
+  const productDTO = plainToClass(UpdatedProductDTO, productData);
   try {
     await validateOrReject(productDTO, {
       forbidUnknownValues: true,
