@@ -13,24 +13,23 @@ services:
       - db:/var/lib/mysql
       - ./db/init.sql:/docker-entrypoint-initdb.d/init.sql
 
-  orders-products-api:
-    depends_on:
-      - db
-    build: .
-    # image: './'
-    container_name: 'orders-products-api'
-    restart: always
-    ports:
-      - '3005:3005'
-    networks:
-      - webnet
-    environment:
-      - MYSQL_SERVER=localhost
-      - MYSQL_PORT=3306
-      - MYSQL_DB=shop
-      - MYSQL_USER=root
-      - MYSQL_PW=S3cret
-      - APP_PORT=3005
+  # orders-products-api:
+  #   depends_on:
+  #     - db
+  #   build: .
+  #   container_name: 'orders-products-api'
+  #   restart: always
+  #   ports:
+  #     - '3005:3005'
+  #   networks:
+  #     - webnet
+  #   environment:
+  #     - MYSQL_SERVER=localhost
+  #     - MYSQL_PORT=3306
+  #     - MYSQL_DB=shop
+  #     - MYSQL_USER=root
+  #     - MYSQL_PW=S3cret
+  #     - APP_PORT=3005
 networks:
   webnet:
 
