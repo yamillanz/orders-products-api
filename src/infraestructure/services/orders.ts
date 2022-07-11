@@ -4,7 +4,6 @@ import db from '../database';
 
 export const getAllDataOrders = async () => {
   try {
-    // const orders: Orders[] = (await db.findAll({ table: 'orders' })) ?? [];
     const orders: Orders[] = (await db.querySelect('SELECT * FROM orders LIMIT 100')) ?? [];
     return orders;
   } catch (error) {
@@ -45,7 +44,7 @@ export const updateOrderData = async (idOrden: number, orderToUpdate: UpdatedOrd
   try {
     let orderFinded: Orders = await getDataOneOrder(idOrden);
     orderFinded = { ...orderFinded, ...orderToUpdate };
-    const resultUpdate = await db.update({ table: 'orders', data: orderFinded, id: 'idOrder' });
+    await db.update({ table: 'orders', data: orderFinded, id: 'idOrder' });
     return orderFinded;
   } catch (error) {
     console.error(error);
