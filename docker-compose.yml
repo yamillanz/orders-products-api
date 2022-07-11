@@ -17,7 +17,6 @@ services:
     depends_on:
       - db
     build: .
-    # image: './'
     container_name: 'orders-products-api'
     restart: always
     ports:
