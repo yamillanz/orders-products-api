@@ -7,9 +7,6 @@ services:
     restart: always
     environment:
       - MYSQL_ROOT_PASSWORD=S3cret
-      # - MYSQL_PASSWORD=An0thrS3crt
-      # - MYSQL_USER=shop_user
-      # - MYSQL_DATABASE=shop
     ports:
       - '3306:3306'
     volumes:

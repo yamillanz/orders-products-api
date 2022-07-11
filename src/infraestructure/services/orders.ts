@@ -1,10 +1,11 @@
 import { Orders } from '../models/order';
-import { OrderDTO, UpdatedOrderDTO } from '../models/order.dto';
+import { NewOrderDTO, OrderDTO, UpdatedOrderDTO } from '../models/order.dto';
 import db from '../database';
 
 export const getAllDataOrders = async () => {
   try {
-    const orders: Orders[] = (await db.findAll({ table: 'orders' })) ?? [];
+    // const orders: Orders[] = (await db.findAll({ table: 'orders' })) ?? [];
+    const orders: Orders[] = (await db.querySelect('SELECT * FROM orders LIMIT 100')) ?? [];
     return orders;
   } catch (error) {
     console.error(error);
@@ -29,8 +30,9 @@ export const getDataOneOrder = async (idOrder: number) => {
 
 export const addOrderData = async (orden: OrderDTO) => {
   try {
-    const resultSave = await db.save({ table: 'orders', data: orden });
-    // console.log(resultSave.insertId);
+    let orderNewData: NewOrderDTO = { ...orden };
+    orderNewData.dateCreated = new Date().toISOString().replace('T', ' ').replace('Z', '');
+    const resultSave = await db.save({ table: 'orders', data: orderNewData });
     const { insertId } = resultSave;
     const newOrderCreated: Orders | undefined = await getDataOneOrder(insertId);
     return newOrderCreated;

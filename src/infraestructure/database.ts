@@ -35,7 +35,7 @@ class database {
     });
 
     try {
-      let testconection = await this.cnn.query(`use ${this.database};`);
+      await this.cnn.query(`use ${this.database};`);
       console.log(`Database ${this.database} conected!`);
     } catch (error) {
       console.log(`ERROR database conection!: ${error} `);
@@ -54,13 +54,8 @@ class database {
   }
 
   async querySelect(sql: string, data?: any) {
-    let result: any = null;
-    if (!data) {
-      result = await this.cnn.query(sql);
-    } else {
-      result = await this.cnn.query(sql, data);
-    }
-    return result;
+    let result: any = await this.cnn.query(sql, data ?? null);
+    return result[0];
   }
 
   async save(param: ParamsData) {
@@ -72,7 +67,8 @@ class database {
       const result = await this.cnn.query(`INSERT INTO ${table} SET ? `, data);
       return result[0];
     } catch (error) {
-      return error;
+      console.log(error);
+      throw error;
     }
   }
 
@@ -88,7 +84,8 @@ class database {
       ]);
       return result[0];
     } catch (error) {
-      return error;
+      console.log(error);
+      throw error;
     }
   }
 
@@ -101,18 +98,20 @@ class database {
       const result = await this.cnn.query(`DELETE FROM ${table} WHERE ${id} = ? `, data[id || '']);
       return result;
     } catch (error) {
-      return error;
+      console.log(error);
+      throw error;
     }
   }
 
   async findAll(param: ParamsData) {
-    const { table, id, idvalue } = param;
+    const { table } = param;
     try {
       const result = await this.cnn.query(`SELECT * FROM ${table}`);
       // console.log('result', result);
       return result[0];
     } catch (error) {
-      return error;
+      console.log(error);
+      throw error;
     }
   }
 
@@ -125,7 +124,8 @@ class database {
       const result = await this.cnn.query(`SELECT * FROM ${table} WHERE ${id} = ? `, idvalue);
       return result[0];
     } catch (error) {
-      return error;
+      console.log(error);
+      throw error;
     }
   }
 }

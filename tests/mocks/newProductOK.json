@@ -1,0 +1,14 @@
+{
+  "idOrderProduct": 5,
+  "idOrder": 20,
+  "valueUnit": 34.5,
+  "unit": "kg",
+  "descriptionProd": "pelota",
+  "sku": null,
+  "quantity": 325,
+  "qtyBox": 12,
+  "weight": null,
+  "volume": null,
+  "mark": null,
+  "status": 0
+}
