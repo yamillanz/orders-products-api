@@ -1,6 +1,6 @@
 # APP orders-products-api
 
-#### challenge code
+#### code challenge
 
 ## Api's avaibled
 
