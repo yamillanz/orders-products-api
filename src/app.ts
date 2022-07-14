@@ -1,7 +1,7 @@
 import express from 'express';
 import * as dotenv from 'dotenv';
 import morgan from 'morgan';
-// import cors from 'cors';
+import cors from 'cors';
 import db from './infraestructure/database';
 //routes
 import userRoutes from './application/users.routes';
@@ -17,6 +17,12 @@ app.set('port', process.env.APP_PORT);
 //middlewares
 app.use(morgan('dev'));
 app.use(express.json());
+app.use(
+  cors({
+    origin: ['http://localhost:4200'],
+    credentials: true,
+  })
+);
 
 //rutas
 app.use(userRoutes);
