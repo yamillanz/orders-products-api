@@ -16,7 +16,6 @@ export const addNewOrder = async (orderData: OrderDTO): Promise<Orders> => {
       validationError: { target: false, value: false },
     });
   } catch (error) {
-    console.log('paso', error);
     throw errorEntryBuilder(error);
   }
 

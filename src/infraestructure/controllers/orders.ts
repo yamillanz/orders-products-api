@@ -20,8 +20,9 @@ export const addOrder = async (req: Request, resp: Response) => {
     const newOrder: Orders = await addNewOrder(req.body);
     resp.status(200).json({ message: 'Add Data Successfully', order: newOrder });
   } catch (error) {
-    const { statusCode, errorsMessages } = error;
+    let { statusCode, errorsMessages, errorMessages } = error;
     console.log('error request: ', error);
+    errorsMessages = errorsMessages ?? { error: 'Add error databased' };
     resp.status(statusCode).json({ errorsMessages });
   }
 };
@@ -32,8 +33,9 @@ export const updateOrder = async (req: Request, resp: Response) => {
     const orderUpdated: Orders = await updateAnOrder(idOrder, req.body);
     resp.status(200).json({ message: 'Successfully Update Data', order: orderUpdated });
   } catch (error) {
-    const { statusCode, errorsMessages } = error;
-    console.log('error request: ', error);
+    let { statusCode, errorsMessages, errorMessages } = error;
+    console.log('error request: ', errorsMessages);
+    errorsMessages = errorsMessages ?? { error: 'Update error databased' };
     resp.status(statusCode).json({ errorsMessages });
   }
 };

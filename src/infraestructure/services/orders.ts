@@ -36,7 +36,8 @@ export const addOrderData = async (orden: OrderDTO) => {
     const newOrderCreated: Orders | undefined = await getDataOneOrder(insertId);
     return newOrderCreated;
   } catch (error) {
-    console.error(error);
+    // console.error(error);
+    throw error;
   }
 };
 
@@ -48,6 +49,7 @@ export const updateOrderData = async (idOrden: number, orderToUpdate: UpdatedOrd
     return orderFinded;
   } catch (error) {
     console.error(error);
+    throw error;
   }
 };
 
