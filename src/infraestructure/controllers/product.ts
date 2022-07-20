@@ -22,7 +22,6 @@ export const addProduct = async (req: Request, resp: Response) => {
     let { statusCode, errorsMessages } = error;
     console.log('error request: ', error);
     errorsMessages = errorsMessages ?? { error: 'Something wrong with add product' };
-
     resp.status(statusCode).json({ errorsMessages });
   }
 };
