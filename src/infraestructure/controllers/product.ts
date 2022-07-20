@@ -19,8 +19,10 @@ export const addProduct = async (req: Request, resp: Response) => {
     const newProduct = await addNewProduct(req.body);
     resp.status(200).json({ message: 'Add Data Successfully', order: newProduct });
   } catch (error) {
-    const { statusCode, errorsMessages } = error;
+    let { statusCode, errorsMessages } = error;
     console.log('error request: ', error);
+    errorsMessages = errorsMessages ?? { error: 'Something wrong with add product' };
+
     resp.status(statusCode).json({ errorsMessages });
   }
 };
@@ -31,7 +33,9 @@ export const updateProduct = async (req: Request, resp: Response) => {
     const productUpdate = await updateAProduct(idProduct, req.body);
     resp.status(200).json({ message: 'Successfully Update Data', order: productUpdate });
   } catch (error) {
-    const { statusCode, errorsMessages } = error;
+    let { statusCode, errorsMessages } = error;
+    errorsMessages = errorsMessages ?? { error: 'Something wrong with add product' };
+
     console.log('error request: ', error);
     resp.status(statusCode).json({ errorsMessages });
   }
